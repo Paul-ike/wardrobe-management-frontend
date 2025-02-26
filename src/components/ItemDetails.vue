@@ -1,4 +1,3 @@
-// src/components/ItemDetails.js
 <template>
   <div class="item-details">
     <h1>Item Details</h1>

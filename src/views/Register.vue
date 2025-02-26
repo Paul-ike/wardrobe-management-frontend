@@ -1,4 +1,3 @@
-// src/views/Register.vue
 <template>
   <div>
     <Header />

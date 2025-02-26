@@ -1,4 +1,3 @@
-// src/views/Login.vue
 <template>
   <div>
     <Header />

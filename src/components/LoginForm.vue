@@ -1,4 +1,3 @@
-// src/components/LoginForm.js
 <template>
   <div class="login-form">
     <h1>Login</h1>

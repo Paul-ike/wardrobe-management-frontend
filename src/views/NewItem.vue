@@ -1,4 +1,3 @@
-// src/views/NewItem.vue
 <template>
   <div>
     <Header />

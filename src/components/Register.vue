@@ -1,4 +1,3 @@
-// src/components/RegisterForm.js
 <template>
   <div class="register-form">
     <h1>Register</h1>

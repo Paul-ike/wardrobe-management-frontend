@@ -1,4 +1,3 @@
-// src/components/Header.js
 <template>
   <nav class="header">
     <ul>

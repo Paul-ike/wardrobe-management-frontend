@@ -1,4 +1,3 @@
-// src/components/NewItemForm.js
 <template>
   <div class="new-item-form">
     <h1>Add New Item</h1>

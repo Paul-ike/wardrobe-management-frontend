@@ -1,4 +1,3 @@
-// src/views/ItemDetails.vue
 <template>
   <div>
     <Header />
