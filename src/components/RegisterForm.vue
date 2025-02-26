@@ -43,7 +43,7 @@ export default {
         return;
       }
 
-      axios.post('https://wardrobe-management-o2bd.onrender.com/register', {
+      axios.post('https://wardrobe-management-o2bd.onrender.com/api/register', {
         name: this.name,
         email: this.email,
         password: this.password
@@ -80,7 +80,7 @@ label {
 }
 
 input[type="text"], input[type="email"], input[type="password"] {
-  width: 100%;
+  width: 95%;
   height: 40px;
   margin-bottom: 20px;
   padding: 10px;

@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     submitForm() {
-      axios.post('https://wardrobe-management-o2bd.onrender.com/clothing-items', {
+      axios.post('https://wardrobe-management-o2bd.onrender.com/api/clothing-items', {
         name: this.name,
         category_id: this.category_id,
         description: this.description

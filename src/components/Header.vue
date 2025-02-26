@@ -5,7 +5,7 @@
       <li><router-link to="/new-item">Add New Item</router-link></li>
       <li v-if="isLoggedIn"><button @click="logout">Logout</button></li>
       <li v-else>
-        <router-link to="/login">Login</router-link>
+        <router-link to="/login" class="login-link">Login</router-link>
         <router-link to="/register">Register</router-link>
       </li>
     </ul>
@@ -51,6 +51,10 @@ export default {
 .header a {
   color: white;
   text-decoration: none;
+}
+
+.login-link {
+  margin-right: 10px;
 }
 
 .header button {

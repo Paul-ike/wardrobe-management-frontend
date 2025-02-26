@@ -21,7 +21,7 @@ export default {
     }
   },
   mounted() {
-    axios.get('https://wardrobe-management-o2bd.onrender.com/clothing-items', {
+    axios.get('https://wardrobe-management-o2bd.onrender.com/api/clothing-items', {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
