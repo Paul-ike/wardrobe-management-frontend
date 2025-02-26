@@ -1,3 +1,4 @@
+// src/components/RegisterForm.vue
 <template>
   <div class="register-form">
     <h1>Register</h1>
@@ -25,6 +26,7 @@
 
 <script>
 import axios from 'axios';
+import { useToast } from 'vue-toastification';
 
 export default {
   name: 'RegisterForm',
@@ -33,26 +35,41 @@ export default {
       name: '',
       email: '',
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
     }
+  },
+  setup() {
+    const toast = useToast();
+
+    return { toast };
   },
   methods: {
     submitForm() {
       if (this.password !== this.confirmPassword) {
-        alert('Passwords do not match');
+        this.toast.error('Passwords do not match');
         return;
       }
 
       axios.post('https://wardrobe-management-o2bd.onrender.com/api/register', {
         name: this.name,
         email: this.email,
-        password: this.password
+        password: this.password,
+        password_confirmation: this.confirmPassword
       })
       .then(() => {
+        this.toast.success('Registration successful');
         this.$router.push('/login');
       })
       .catch(error => {
-        console.error(error);
+        if (error.response.status === 422) {
+          if (error.response.data.errors.email) {
+            this.toast.error('Email already exists');
+          } else {
+            this.toast.error('Registration failed');
+          }
+        } else {
+          this.toast.error('Registration failed');
+        }
       });
     }
   }
@@ -61,17 +78,17 @@ export default {
 
 <style scoped>
 .register-form {
-  max-width: 400px;
-  margin: 40px auto;
-  padding: 20px;
+  max-width: 400px; 
+  margin: 20px auto;
+  padding: 15px; 
   background-color: #f9f9f9;
   border: 1px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 15px; /* Less spacing between inputs */
 }
 
 label {
@@ -79,17 +96,19 @@ label {
   margin-bottom: 10px;
 }
 
-input[type="text"], input[type="email"], input[type="password"] {
+input[type="text"], 
+input[type="email"], 
+input[type="password"] {
   width: 95%;
-  height: 40px;
-  margin-bottom: 20px;
-  padding: 10px;
+  padding: 8px;
   border: 1px solid #ccc;
+  font-size: 14px;
 }
 
 .btn {
   width: 100%;
-  height: 40px;
+  font-size: 14px;
+  height: 35px;
   background-color: #4CAF50;
   color: white;
   padding: 10px;

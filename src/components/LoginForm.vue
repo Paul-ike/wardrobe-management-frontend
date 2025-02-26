@@ -17,14 +17,20 @@
 
 <script>
 import axios from 'axios';
+import { useToast } from 'vue-toastification';
 
 export default {
   name: 'LoginForm',
   data() {
     return {
       email: '',
-      password: ''
+      password: '',
     }
+  },
+  setup() {
+    const toast = useToast();
+
+    return { toast };
   },
   methods: {
     submitForm() {
@@ -35,10 +41,15 @@ export default {
       .then(response => {
         // Handle successful login
         localStorage.setItem('token', response.data.access_token);
+        this.toast.success('Login successful'); // Use toast directly
         this.$router.push('/');
       })
       .catch(error => {
-        console.error(error);
+        if (error.response.status === 401) {
+          this.toast.error('Invalid email or password'); // Use toast directly
+        } else {
+          this.toast.error('Login failed'); // Use toast directly
+        }
       });
     }
   }
