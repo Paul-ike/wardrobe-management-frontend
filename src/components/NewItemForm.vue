@@ -1,3 +1,4 @@
+// src/components/NewItemForm.vue
 <template>
   <div class="new-item-form">
     <h1>Add New Item</h1>
@@ -21,6 +22,7 @@
 
 <script>
 import axios from 'axios';
+import { useToast } from 'vue-toastification';
 
 export default {
   name: 'NewItemForm',
@@ -30,6 +32,11 @@ export default {
       category_id: '',
       description: ''
     }
+  },
+  setup() {
+    const toast = useToast();
+
+    return { toast };
   },
   methods: {
     submitForm() {
@@ -43,10 +50,17 @@ export default {
         }
       })
       .then(() => {
+        this.toast.success('Item added successfully');
         this.$router.push('/');
       })
       .catch(error => {
-        console.error(error);
+        if (error.response.status === 422) {
+          this.toast.error('Invalid data provided');
+        } else if (error.response.status === 401) {
+          this.toast.error('Unauthorized access');
+        } else {
+          this.toast.error('Failed to add item');
+        }
       });
     }
   }
@@ -74,15 +88,14 @@ label {
 }
 
 input[type="text"], input[type="number"] {
-  width: 100%;
-  height: 40px;
+  width: 95%;
   margin-bottom: 20px;
   padding: 10px;
   border: 1px solid #ccc;
 }
 
 textarea {
-  width: 100%;
+  width: 95%;
   height: 100px;
   padding: 10px;
   border: 1px solid #ccc;
