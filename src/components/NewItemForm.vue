@@ -1,4 +1,3 @@
-// src/components/NewItemForm.vue
 <template>
   <div class="new-item-form">
     <h1>Add New Item</h1>
@@ -7,14 +6,22 @@
         <label for="name">Name:</label>
         <input type="text" id="name" v-model="name" required>
       </div>
+
       <div class="form-group">
-        <label for="category_id">Category ID:</label>
-        <input type="number" id="category_id" v-model="category_id" required>
+        <label for="category_id">Category:</label>
+        <select id="category_id" v-model="category_id" required>
+          <option value="" disabled>Select a category</option>
+          <option v-for="category in categories" :key="category.id" :value="category.id">
+            {{ category.name }}
+          </option>
+        </select>
       </div>
+
       <div class="form-group">
         <label for="description">Description:</label>
         <textarea id="description" v-model="description"></textarea>
       </div>
+
       <button type="submit" class="btn">Add Item</button>
     </form>
   </div>
@@ -30,15 +37,28 @@ export default {
     return {
       name: '',
       category_id: '',
-      description: ''
+      description: '',
+      categories: []
     }
   },
   setup() {
     const toast = useToast();
-
     return { toast };
   },
   methods: {
+    fetchCategories() {
+      axios.get('https://wardrobe-management-o2bd.onrender.com/api/categories', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+      .then(response => {
+        this.categories = response.data; // Store categories
+      })
+      .catch(() => {
+        this.toast.error('Failed to load categories');
+      });
+    },
     submitForm() {
       axios.post('https://wardrobe-management-o2bd.onrender.com/api/clothing-items', {
         name: this.name,
@@ -63,6 +83,9 @@ export default {
         }
       });
     }
+  },
+  mounted() {
+    this.fetchCategories(); // Fetch categories when the component loads
   }
 }
 </script>
@@ -87,16 +110,9 @@ label {
   margin-bottom: 10px;
 }
 
-input[type="text"], input[type="number"] {
+input[type="text"], select, textarea {
   width: 95%;
   margin-bottom: 20px;
-  padding: 10px;
-  border: 1px solid #ccc;
-}
-
-textarea {
-  width: 95%;
-  height: 100px;
   padding: 10px;
   border: 1px solid #ccc;
 }

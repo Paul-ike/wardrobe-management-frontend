@@ -4,6 +4,7 @@ import ItemDetailsView from '../views/ItemDetails.vue';
 import NewItemView from '../views/NewItem.vue';
 import LoginView from '../views/Login.vue';
 import RegisterView from '../views/Register.vue';
+import EditItem from '../views/EditItem.vue'
 
 const routes = [
   {
@@ -33,6 +34,11 @@ const routes = [
     path: '/register',
     name: 'register',
     component: RegisterView
+  },
+  {
+    path: '/edit-item/:id',
+    name: 'editItem',
+    component: EditItem
   }
 ]
 
